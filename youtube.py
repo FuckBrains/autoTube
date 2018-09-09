@@ -150,7 +150,7 @@ def upload_video(clip_title):
     youtube = get_authenticated_service()
     try:
         file_path = 'result.mp4'
-        title = '"' + clip_title + '"' + ' - Fortnite Best Clips!'
+        title = '"' + clip_title.title() + '"' + ' - Fortnite Best Clips!'
         description = 'The best Fortnite Clips, WTF Moments & Epic Moments! ' \
                       'Fortnite Fails, Wins, Best moments Funny Moments!' \
                       'If you like it, please like and subscribe!'
