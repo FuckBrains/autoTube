@@ -10,6 +10,10 @@ from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 from google_auth_oauthlib.flow import InstalledAppFlow
 
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.file import Storage
+from oauth2client.tools import argparser, run_flow
+
 # Explicitly tell the underlying HTTP transport library not to retry, since
 # we are handling retry logic ourselves.
 httplib2.RETRIES = 1
@@ -70,9 +74,24 @@ API_VERSION = 'v3'
 
 
 def get_authenticated_service():
-    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
-    credentials = flow.run_console()
-    return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
+    # flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
+    # credentials = flow.run_console()
+    # return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
+
+    flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE,
+                                   scope=YOUTUBE_UPLOAD_SCOPE,
+                                   message=MISSING_CLIENT_SECRETS_MESSAGE)
+
+    storage = Storage("%s-oauth2.json" % sys.argv[0])
+    credentials = storage.get()
+
+    if credentials is None or credentials.invalid:
+        args = argparser.parse_args()
+        args.noauth_local_webserver = True
+        credentials = run_flow(flow, storage, args)
+
+    return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
+                 http=credentials.authorize(httplib2.Http()))
 
 
 def initialize_upload(youtube, file_path, title, description, category, tags):
@@ -156,7 +175,9 @@ def upload_video(clip_title):
                       'If you like it, please like and subscribe!'
         category = 20  # Gaming
         tags = ['fortnite', 'best', 'clips', 'moments', 'ninja', 'wins', 'fails', 'daily', 'like', 'wtf', 'highlights',
-                'funny', 'plays', 'fortnite best', 'fortnite clips', 'fortnite moments', 'fortnite ninja', 'fortnite wins', 'fortnite fails', 'fortnite daily', 'fortnite like', 'fortnite wtf', 'fortnite highlights',
+                'funny', 'plays', 'fortnite best', 'fortnite clips', 'fortnite moments', 'fortnite ninja',
+                'fortnite wins', 'fortnite fails', 'fortnite daily', 'fortnite like', 'fortnite wtf',
+                'fortnite highlights',
                 'fortnite funny', 'fortnite plays']
         initialize_upload(youtube, file_path, title, description, category, tags)
     except HttpError as e:
