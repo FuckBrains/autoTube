@@ -60,7 +60,6 @@ def get_clips_by_lang(lang):
     for i, clip in enumerate(response.json()['clips']):
         print(clip['url'])
         print(clip['broadcaster']['name'])
-        print(clip['title'])
         try:
             if i == 0:
                 first_title = clip['title']
