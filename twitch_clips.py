@@ -11,6 +11,7 @@ headers = {
     'User-Agent': 'Mozilla/5.0'
 }
 
+
 def retrieve_mp4_data(slug):
     print("https://api.twitch.tv/helix/clips?id=" + slug)
     clip_info = requests.get(
@@ -60,8 +61,11 @@ def get_clips_by_lang(lang):
         print(clip['url'])
         print(clip['broadcaster']['name'])
         print(clip['title'])
-        if i == 0:
-            first_title = clip['title']
+        try:
+            if i == 0:
+                first_title = clip['title']
+        except:
+            first_title = 'amazing!'
         clip_duration = get_clip(clip['url'], clip['broadcaster']['name'], i)
         complete_duration += clip_duration
         result.append(clip['broadcaster']['name'])
