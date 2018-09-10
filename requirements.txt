@@ -1,7 +1,6 @@
 requests
 moviepy
 httplib2
-httpclient
 apiclient
 googleapiclient
 oauth2clientoauth2client
