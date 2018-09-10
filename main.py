@@ -1,5 +1,3 @@
-import schedule
-import time
 from twitch_clips import get_clips_by_lang
 from video_edition import edit_video
 from youtube import upload_video
