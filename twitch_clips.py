@@ -58,17 +58,17 @@ def get_clips_by_lang(lang):
     first_title = ""
     complete_duration = 0
     for i, clip in enumerate(response.json()['clips']):
-        print(clip['url'])
-        print(clip['broadcaster']['name'])
         try:
+            print(clip['url'])
+            print(clip['broadcaster']['name'])
             if i == 0:
                 first_title = clip['title']
+            clip_duration = get_clip(clip['url'], clip['broadcaster']['name'], i)
+            complete_duration += clip_duration
+            result.append(clip['broadcaster']['name'])
+            if complete_duration >= 585:
+                break
         except:
-            first_title = 'amazing!'
-        clip_duration = get_clip(clip['url'], clip['broadcaster']['name'], i)
-        complete_duration += clip_duration
-        result.append(clip['broadcaster']['name'])
-        if complete_duration >= 585:
-            break
+            pass
     print('Download finished')
     return result, first_title
