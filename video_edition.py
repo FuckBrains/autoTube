@@ -4,14 +4,14 @@ from moviepy.editor import *
 def fix_final_clip(final_clip):
     return final_clip.set_audio(final_clip.audio.set_fps(final_clip.fps))
 
-def edit_video(positions_and_broadcaster):
+def edit_video(broadcasters):
     clips = []
     # audio_iterator = 0
-    for i in range(len(positions_and_broadcaster)):
+    for i in range(len(broadcasters)):
         clip = VideoFileClip('downloads/' + str(i) + '.mp4').resize(width=1920)
         if clip.duration > 194:
             continue
-        text_clip = TextClip(txt=positions_and_broadcaster[i], font='Burbank Big Condensed Black',
+        text_clip = TextClip(txt=broadcasters[i], font='Burbank Big Condensed Black',
                              fontsize=200, color='white', stroke_color='black',
                              stroke_width=5).set_position(('right', 'top')).set_duration(clip.duration)
         clip = CompositeVideoClip([clip, text_clip])
