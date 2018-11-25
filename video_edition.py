@@ -1,4 +1,5 @@
 from moviepy.editor import *
+import settings
 
 
 def fix_final_clip(final_clip):
@@ -8,7 +9,7 @@ def edit_video(broadcasters):
     clips = []
     # audio_iterator = 0
     for i in range(len(broadcasters)):
-        clip = VideoFileClip('downloads/' + str(i) + '.mp4').resize(width=1920)
+        clip = VideoFileClip(settings.DOWNLOADS_DIRECTORY + str(i) + '.mp4').resize(width=1920)
         if clip.duration > 194:
             continue
         text_clip = TextClip(txt=broadcasters[i], font='Burbank Big Condensed Black',
