@@ -1,5 +1,6 @@
 from moviepy.editor import *
 import settings
+import logging
 
 
 def fix_final_clip(final_clip):
@@ -29,7 +30,7 @@ def edit_video(broadcasters):
         clips.append(clip)
 
     final_clip = concatenate_videoclips(clips, method='compose')
-    outro = VideoFileClip('utils/outro.mp4')
+    outro = VideoFileClip(settings.UTILS_DIRECTORY + 'outro.mp4')
     final_clip = concatenate_videoclips([final_clip, outro], method='compose')
 
 
@@ -40,5 +41,6 @@ def edit_video(broadcasters):
 
     final_clip = fix_final_clip(final_clip)
 
-    final_clip.write_videofile('result.mp4', codec='libx264', threads=4)
+    final_clip.write_videofile(settings.RESULT_DIRECTORY + 'result.mp4', codec='libx264', threads=4)
+    logging.info('Render finished')
     # final_clip.preview()

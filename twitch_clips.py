@@ -1,6 +1,8 @@
 import urllib.request
 import requests
 import sys
+import logging
+import settings
 from moviepy.editor import *
 from settings import CLIENTID
 
@@ -34,7 +36,7 @@ def dl_progress(count, block_size, total_size):
 def get_clip(clip, broadcaster, position):
     slug = clip.split('/')[3].split('?')[0].replace('\n', '')
     mp4_url = retrieve_mp4_data(slug)
-    output_path = 'downloads/' + str(position) + ".mp4"
+    output_path = settings.DOWNLOADS_DIRECTORY + str(position) + ".mp4"
 
     print('\nDownloading clip slug: ' + slug)
     print(mp4_url)
@@ -47,7 +49,6 @@ def get_clips_by_lang(lang):
         lang_request = '&language=' + lang
     else:
         lang_request = ''
-    print('Downloading TOP 30 last 24h ' + lang + ' Fortnite clips')
 
     response = requests.get('https://api.twitch.tv/kraken/clips/top?game=' + 'Fortnite' +
                             '&period=' + 'day' +
@@ -68,7 +69,7 @@ def get_clips_by_lang(lang):
             result.append(clip['broadcaster']['name'])
             if complete_duration >= 585:
                 break
-        except:
-            pass
-    print('Download finished')
+        except Exception as e:
+            logging.warning(str(e))
+    logging.info('Download finished')
     return result, first_title

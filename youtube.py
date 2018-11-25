@@ -4,6 +4,8 @@ import os
 import random
 import sys
 import time
+import logging
+import settings
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -168,7 +170,7 @@ def resumable_upload(insert_request):
 def upload_video(clip_title):
     youtube = get_authenticated_service()
     try:
-        file_path = 'result.mp4'
+        file_path = settings.RESULT_DIRECTORY + 'result.mp4'
         title = '"' + clip_title.title() + '"' + ' - Fortnite Best Clips!'
         description = 'The best Fortnite Clips, WTF Moments & Epic Moments! ' \
                       'Fortnite Fails, Wins, Best moments Funny Moments!' \
@@ -180,5 +182,6 @@ def upload_video(clip_title):
                 'fortnite highlights',
                 'fortnite funny', 'fortnite plays']
         initialize_upload(youtube, file_path, title, description, category, tags)
+        logging.info('video uploaded')
     except HttpError as e:
         print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
