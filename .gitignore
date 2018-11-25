@@ -1,4 +1,5 @@
 .idea
+*.mp4
 *.json
 *.pyc
 *.xml
