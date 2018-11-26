@@ -15,8 +15,23 @@ def setup():
 
 
 setup()
-clips, first_title = get_clips_by_lang('all')
-edit_video(clips)
-upload_video(datetime.datetime.now().strftime('%Y-%m-%d'))
-clean_files()
+need_to_clear = False
+try:
+    clips, first_title = get_clips_by_lang('all')
+    need_to_clear = True
+except Exception as e:
+    logging.error(str(e))
+try:
+    edit_video(clips)
+except Exception as e:
+    logging.error(str(e))
+try:
+    upload_video(datetime.datetime.now().strftime('%Y-%m-%d'))
+except Exception as e:
+    logging.error(str(e))
+try:
+    if need_to_clear:
+        clean_files()
+except Exception as e:
+    logging.error(str(e))
 
