@@ -32,7 +32,10 @@ except Exception as e:
     pass
 try:
     if need_to_clear:
+        logging.info('Starting to clean the files')
         clean_files()
+    else:
+        logging.info('No need to clean')
 except Exception as e:
     logging.error(str(e))
 
