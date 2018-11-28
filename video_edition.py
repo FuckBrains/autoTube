@@ -9,6 +9,7 @@ def fix_final_clip(final_clip):
 def edit_video(broadcasters):
     clips = []
     # audio_iterator = 0
+    logging.info('Starting video edit')
     for i in range(len(broadcasters)):
         clip = VideoFileClip(settings.DOWNLOADS_DIRECTORY + str(i) + '.mp4').resize(width=1920)
         if clip.duration > 194:

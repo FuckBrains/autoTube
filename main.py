@@ -29,6 +29,7 @@ try:
     upload_video(datetime.datetime.now().strftime('%Y-%m-%d'))
 except Exception as e:
     logging.error(str(e))
+    pass
 try:
     if need_to_clear:
         clean_files()
