@@ -84,7 +84,7 @@ def get_authenticated_service():
                                    scope=YOUTUBE_UPLOAD_SCOPE,
                                    message=MISSING_CLIENT_SECRETS_MESSAGE)
 
-    storage = Storage("%s-oauth2.json" % sys.argv[0])
+    storage = Storage('credentials.json')
     credentials = storage.get()
 
     if credentials is None or credentials.invalid:
@@ -170,6 +170,7 @@ def resumable_upload(insert_request):
 def upload_video(clip_title):
     youtube = get_authenticated_service()
     try:
+        logging.info('Starting upload process')
         file_path = settings.RESULT_DIRECTORY + 'result.mp4'
         title = '"' + clip_title.title() + '"' + ' - Fortnite Best Clips!'
         description = 'The best Fortnite Clips, WTF Moments & Epic Moments! ' \
