@@ -168,6 +168,7 @@ def resumable_upload(insert_request):
 
 
 def upload_video(clip_title):
+    logging.info('Starting youtube auth service')
     youtube = get_authenticated_service()
     try:
         logging.info('Starting upload process')
