@@ -26,7 +26,7 @@ try:
 except Exception as e:
     logging.error(str(e))
 try:
-    upload_video(datetime.datetime.now().strftime('%Y-%m-%d'))
+    upload_video(first_title)
 except Exception as e:
     logging.error(str(e))
     pass
