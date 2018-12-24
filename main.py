@@ -16,26 +16,14 @@ def setup():
 
 setup()
 need_to_clear = False
-try:
-    clips, first_title = get_clips_by_lang('all')
-    need_to_clear = True
-except Exception as e:
-    logging.error(str(e))
-try:
-    edit_video(clips)
-except Exception as e:
-    logging.error(str(e))
-try:
-    upload_video(first_title)
-except Exception as e:
-    logging.error(str(e))
-    pass
-try:
-    if need_to_clear:
-        logging.info('Starting to clean the files')
-        clean_files()
-    else:
-        logging.info('No need to clean')
-except Exception as e:
-    logging.error(str(e))
+
+clips, first_title = get_clips_by_lang('all')
+need_to_clear = True
+edit_video(clips)
+upload_video(first_title)
+if need_to_clear:
+    logging.info('Starting to clean the files')
+    clean_files()
+else:
+    logging.info('No need to clean')
 
