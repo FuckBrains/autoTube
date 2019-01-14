@@ -74,6 +74,7 @@ SCOPES = ['https://www.googleapis.com/auth/youtube']
 API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
+emotes = ['🔥', '⭐', '💀', '📹', '😈', '🙀', '⚡', '🏆', '🎮', '💣', '💎', '✅', '♠']
 
 def get_authenticated_service():
     # flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
@@ -173,7 +174,8 @@ def upload_video(clip_title):
     try:
         logging.info('Starting upload process')
         file_path = settings.RESULT_DIRECTORY + 'result.mp4'
-        title = '"' + clip_title.title() + '"' + ' - Fortnite Best Clips!'
+        random_emote = random.choice(emotes)
+        title = random_emote + ' ' + clip_title.title().replace('!', '').replace('.', '').upper() + '!' + ' ' + random_emote + ' - FORTNITE EPIC & FUNNY BEST MOMENTS'
         description = 'The best Fortnite Clips, WTF Moments & Epic Moments! ' \
                       'Fortnite Fails, Wins, Best moments Funny Moments!' \
                       'If you like it, please like and subscribe!'
@@ -181,7 +183,7 @@ def upload_video(clip_title):
         tags = ['fortnite', 'best', 'clips', 'moments', 'ninja', 'wins', 'fails', 'daily', 'like', 'wtf', 'highlights',
                 'funny', 'plays', 'fortnite best', 'fortnite clips', 'fortnite moments', 'fortnite ninja',
                 'fortnite wins', 'fortnite fails', 'fortnite daily', 'fortnite like', 'fortnite wtf',
-                'fortnite highlights',
+                'fortnite highlights', 'epic', 'tfue', 'savage',
                 'fortnite funny', 'fortnite plays']
         initialize_upload(youtube, file_path, title, description, category, tags)
         logging.info('video uploaded')
