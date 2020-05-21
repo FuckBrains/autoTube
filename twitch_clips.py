@@ -14,11 +14,11 @@ headers = {
 }
 
 
-def retrieve_mp4_data(slug):
+def retrieve_mp4_data(twitch_oauthh_token, slug):
     print("https://api.twitch.tv/helix/clips?id=" + slug)
     clip_info = requests.get(
         "https://api.twitch.tv/helix/clips?id=" + slug,
-        headers={"Client-ID": CLIENTID}).json()
+        headers={"Client-ID": CLIENTID, "Authorization": 'Bearer ' + twitch_oauthh_token}).json()
     print(clip_info)
     thumb_url = clip_info['data'][0]['thumbnail_url']
     slice_point = thumb_url.index("-preview-")
@@ -33,9 +33,9 @@ def dl_progress(count, block_size, total_size):
 
 
 # for each clip in clips.txt
-def get_clip(clip, broadcaster, position):
+def get_clip(twitch_oauthh_token, clip, broadcaster, position):
     slug = clip.split('/')[3].split('?')[0].replace('\n', '')
-    mp4_url = retrieve_mp4_data(slug)
+    mp4_url = retrieve_mp4_data(twitch_oauthh_token, slug)
     output_path = settings.DOWNLOADS_DIRECTORY + str(position) + ".mp4"
 
     print('\nDownloading clip slug: ' + slug)
@@ -44,12 +44,23 @@ def get_clip(clip, broadcaster, position):
     return VideoFileClip(output_path).duration
 
 
+def get_twitch_oauth_token():
+    data = {
+        "client_id": settings.CLIENTID,
+        "client_secret": settings.TWITCH_SECRET,
+        "grant_type": "client_credentials"
+    }
+    response = requests.post('https://id.twitch.tv/oauth2/token', data)
+    return response.json()['access_token']
+
+
 def get_clips_by_lang(lang):
     if lang != 'all':
         lang_request = '&language=' + lang
     else:
         lang_request = ''
 
+    twitch_oauth_token = get_twitch_oauth_token()
     response = requests.get('https://api.twitch.tv/kraken/clips/top?game=' + 'Fortnite' +
                             '&period=' + 'day' +
                             '&limit=' + '100' +
@@ -64,7 +75,8 @@ def get_clips_by_lang(lang):
             print(clip['broadcaster']['name'])
             if i == 0:
                 first_title = clip['title']
-            clip_duration = get_clip(clip['url'], clip['broadcaster']['name'], i)
+            clip_duration = get_clip(twitch_oauth_token,
+                                     clip['url'], clip['broadcaster']['name'], i)
             complete_duration += clip_duration
             result.append(clip['broadcaster']['name'])
             if complete_duration >= 585:
