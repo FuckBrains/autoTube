@@ -1,4 +1,5 @@
 from moviepy.editor import *
+from pymediainfo import MediaInfo
 import settings
 import logging
 
@@ -6,12 +7,23 @@ import logging
 def fix_final_clip(final_clip):
     return final_clip.set_audio(final_clip.audio.set_fps(final_clip.fps))
 
+
 def edit_video(broadcasters):
     clips = []
     # audio_iterator = 0
     logging.info('Starting video edit')
     for i in range(len(broadcasters)):
-        clip = VideoFileClip(settings.DOWNLOADS_DIRECTORY + str(i) + '.mp4').resize(width=1920)
+
+        filename = settings.DOWNLOADS_DIRECTORY + str(i) + '.mp4'
+        
+        media = MediaInfo.parse(filename)
+        video_track = list(
+            filter(lambda track: track.track_type == 'Video', media.tracks))[0]
+        forced_resolution = None
+        if video_track.width != 1920:
+            forced_resolution = (1080, 1920)
+
+        clip = VideoFileClip(filename, target_resolution=forced_resolution)  # 6it/s
         if clip.duration > 194:
             continue
         text_clip = TextClip(txt=broadcasters[i], font='Burbank Big Condensed Black',
@@ -30,18 +42,11 @@ def edit_video(broadcasters):
         # fusion_clip = clip.set_audio(composed_audio)
         clips.append(clip)
 
-    final_clip = concatenate_videoclips(clips, method='compose')
     outro = VideoFileClip(settings.UTILS_DIRECTORY + 'outro.mp4')
-    final_clip = concatenate_videoclips([final_clip, outro], method='compose')
-
-
-
-    # subscribe_clip = VideoFileClip('widgets/GrnScrn.mp4').subclip(0,3)
-    # subscribe_masked = vfx.mask_color(subscribe_clip, color=[1, 253, 0])
-    # final_clip = CompositeVideoClip([final_clip, subscribe_masked])
-
+    clips.append(outro)
+    final_clip = concatenate_videoclips(clips, method='compose')
     final_clip = fix_final_clip(final_clip)
 
-    final_clip.write_videofile(settings.RESULT_DIRECTORY + 'result.mp4', codec='libx264', threads=4)
+    final_clip.write_videofile(
+        settings.RESULT_DIRECTORY + 'result.mp4', codec='libx264', threads=4, fps=60)
     logging.info('Render finished')
-    # final_clip.preview()

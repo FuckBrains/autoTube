@@ -6,3 +6,4 @@ oauth2client
 google_auth_oauthlib
 pylint 
 autopep8
+pymediainfo
