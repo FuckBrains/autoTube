@@ -80,7 +80,7 @@ def get_clips_by_lang(lang):
             complete_duration += clip_duration
             result.append(clip['broadcaster']['name'])
             print('\n')
-            print(complete_duration, 'Should break: ' + complete_duration >= 585)
+            print(complete_duration, 'Should break: ', complete_duration >= 585)
             print('\n')
             if complete_duration >= 585:
                 break
