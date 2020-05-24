@@ -20,6 +20,3 @@ def upload_video(first_clip_title):
             'fortnite highlights', 'epic', 'tfue', 'savage',
             'fortnite funny', 'fortnite plays']
     upload_video_to_youtube(title, file_path, description, category, tags)
-
-def upload_thumbnail():
-    
