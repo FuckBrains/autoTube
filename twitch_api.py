@@ -41,7 +41,10 @@ def get_clip(twitch_oauthh_token, clip, broadcaster, position):
     print('\nDownloading clip slug: ' + slug)
     print(mp4_url)
     urllib.request.urlretrieve(mp4_url, output_path, reporthook=dl_progress)
-    return VideoFileClip(output_path).duration
+    clip = VideoFileClip(output_path)
+    duration = clip.duration
+    clip.close()
+    return duration
 
 
 def get_twitch_oauth_token():
