@@ -1,7 +1,6 @@
 import httplib2
 import http.client as httplib
 import os
-import random
 import sys
 import time
 import logging
@@ -74,7 +73,6 @@ SCOPES = ['https://www.googleapis.com/auth/youtube']
 API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
-emotes = ['🔥', '⭐', '💀', '📹', '😈', '🙀', '⚡', '🏆', '🎮', '💣', '💎', '✅', '♠']
 
 def get_authenticated_service():
     # flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
@@ -116,17 +114,6 @@ def initialize_upload(youtube, file_path, title, description, category, tags):
     insert_request = youtube.videos().insert(
         part=",".join(body.keys()),
         body=body,
-        # The chunksize parameter specifies the size of each chunk of data, in
-        # bytes, that will be uploaded at a time. Set a higher value for
-        # reliable connections as fewer chunks lead to faster uploads. Set a lower
-        # value for better recovery on less reliable connections.
-        #
-        # Setting "chunksize" equal to -1 in the code below means that the entire
-        # file will be uploaded in a single HTTP request. (If the upload fails,
-        # it will still be retried where it left off.) This is usually a best
-        # practice, but if you're using Python older than 2.6 or if you're
-        # running on App Engine, you should set the chunksize to something like
-        # 1024 * 1024 (1 megabyte).
         media_body=MediaFileUpload(file_path, chunksize=-1, resumable=True)
     )
 
@@ -144,7 +131,8 @@ def resumable_upload(insert_request):
             print("Uploading file...")
             status, response = insert_request.next_chunk()
             if 'id' in response:
-                print("Video id '%s' was successfully uploaded." % response['id'])
+                print("Video id '%s' was successfully uploaded." %
+                      response['id'])
             else:
                 exit("The upload failed with an unexpected response: %s" % response)
         except HttpError as e:
@@ -168,24 +156,21 @@ def resumable_upload(insert_request):
             time.sleep(sleep_seconds)
 
 
-def upload_video(clip_title):
+def upload_video(title, file_path, description, category, tags):
     logging.info('Starting youtube auth service')
     youtube = get_authenticated_service()
     try:
         logging.info('Starting upload process')
-        file_path = settings.RESULT_DIRECTORY + 'result.mp4'
-        random_emote = random.choice(emotes)
-        title = random_emote + ' ' + clip_title.title().replace('!', '').replace('.', '').upper() + '!' + ' ' + random_emote + ' - FORTNITE EPIC & FUNNY BEST MOMENTS'
-        description = 'The best Fortnite Clips, WTF Moments & Epic Moments! ' \
-                      'Fortnite Fails, Wins, Best moments Funny Moments!' \
-                      'If you like it, please like and subscribe!'
-        category = 20  # Gaming
-        tags = ['fortnite', 'best', 'clips', 'moments', 'ninja', 'wins', 'fails', 'daily', 'like', 'wtf', 'highlights',
-                'funny', 'plays', 'fortnite best', 'fortnite clips', 'fortnite moments', 'fortnite ninja',
-                'fortnite wins', 'fortnite fails', 'fortnite daily', 'fortnite like', 'fortnite wtf',
-                'fortnite highlights', 'epic', 'tfue', 'savage',
-                'fortnite funny', 'fortnite plays']
-        initialize_upload(youtube, file_path, title, description, category, tags)
+        initialize_upload(youtube, file_path, title,
+                          description, category, tags)
         logging.info('video uploaded')
     except HttpError as e:
         print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+
+
+def upload_thumbnail(video_id, file):
+    youtube = get_authenticated_service()
+    youtube.thumbnails().set(
+        videoId=video_id,
+        media_body=file
+    ).execute()

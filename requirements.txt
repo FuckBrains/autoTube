@@ -7,3 +7,4 @@ google_auth_oauthlib
 pylint 
 autopep8
 pymediainfo
+Pyllow

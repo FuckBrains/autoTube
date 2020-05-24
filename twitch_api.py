@@ -79,6 +79,7 @@ def get_clips_by_lang(lang):
                                      clip['url'], clip['broadcaster']['name'], i)
             complete_duration += clip_duration
             result.append(clip['broadcaster']['name'])
+            print(complete_duration)
             if complete_duration >= 585:
                 break
         except Exception as e:
