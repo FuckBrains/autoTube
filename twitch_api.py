@@ -3,6 +3,7 @@ import requests
 import sys
 import logging
 import settings
+import time
 from moviepy.editor import *
 from settings import CLIENTID
 
@@ -82,6 +83,7 @@ def get_clips_by_lang(lang):
             print('\n')
             print(complete_duration, 'Should break: ', complete_duration >= 585)
             print('\n')
+            time.sleep(3)
             if complete_duration >= 585:
                 break
         except Exception as e:
