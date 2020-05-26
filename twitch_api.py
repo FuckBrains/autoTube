@@ -63,12 +63,15 @@ def get_clips_by_lang(lang):
     else:
         lang_request = ''
 
-    twitch_oauth_token = get_twitch_oauth_token()
-    response = requests.get('https://api.twitch.tv/kraken/clips/top?game=' + 'Fortnite' +
-                            '&period=' + 'day' +
-                            '&limit=' + '100' +
-                            lang_request, headers=headers)
+    try:
+        twitch_oauth_token = get_twitch_oauth_token()
+        response = requests.get('https://api.twitch.tv/kraken/clips/top?game=' + 'Fortnite' +
+                                '&period=' + 'day' +
+                                '&limit=' + '100' +
+                                lang_request, headers=headers)
 
+    except Exception as e:
+        logging.error(str(e))
     result = []
     first_title = ""
     complete_duration = 0
@@ -86,6 +89,6 @@ def get_clips_by_lang(lang):
             if complete_duration >= 585:
                 break
         except Exception as e:
-            logging.warning(str(e))
+            logging.error(str(e))
     logging.info('Download finished')
     return result, first_title
