@@ -69,6 +69,7 @@ def get_clips_by_lang(lang):
                                 '&period=' + 'day' +
                                 '&limit=' + '100' +
                                 lang_request, headers=headers)
+        logging.info('Clips list info downloaded correctly')                        
 
     except Exception as e:
         logging.error(str(e))

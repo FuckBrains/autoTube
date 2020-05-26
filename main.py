@@ -22,6 +22,7 @@ if settings.ENVIRONMENT == 'production':
     setup()
 logging.info('Starting to clean the files')
 clean_files()
+logging.info('Files cleaned')
 
 clips, first_clip_title = get_clips_by_lang('all')
 edit_video(clips)
