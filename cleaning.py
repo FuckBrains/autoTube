@@ -1,5 +1,6 @@
 import os
 import logging
+import settings
 
 def clean_files():
     try:
@@ -7,10 +8,9 @@ def clean_files():
     except Exception as e:
         logging.info(str(e))
         pass
-    basepath = 'downloads/'
-    for file in os.listdir(basepath):
+    for file in os.listdir(settings.DOWNLOADS_DIRECTORY):
         try:
-            os.remove(os.path.join(basepath, file))
+            os.remove(os.path.join(settings.DOWNLOADS_DIRECTORY, file))
         except Exception as e:
             logging.info(str(e))
             pass
