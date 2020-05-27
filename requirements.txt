@@ -8,3 +8,4 @@ pylint
 autopep8
 pymediainfo
 Pyllow
+rope

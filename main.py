@@ -3,7 +3,7 @@ import logging
 import settings
 from twitch_api import get_clips_by_lang
 from video_edition import edit_video
-from youtube_service import upload_video
+from youtube_service import upload_video, upload_thumbnail
 from cleaning import clean_files
 
 # clips = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -24,7 +24,8 @@ logging.info('Starting to clean the files')
 clean_files()
 logging.info('Files cleaned')
 
-clips, first_clip_title = get_clips_by_lang('all')
+clips, first_clip_title, first_streamer = get_clips_by_lang('all')
 edit_video(clips)
-upload_video(first_clip_title)
+video_id = upload_video(first_clip_title)
+upload_thumbnail(video_id, first_streamer, first_clip_title)
 

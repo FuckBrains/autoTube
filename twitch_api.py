@@ -74,7 +74,8 @@ def get_clips_by_lang(lang):
     except Exception as e:
         logging.error(str(e))
     result = []
-    first_title = ""
+    first_title = ''
+    first_streamer = ''
     complete_duration = 0
     for i, clip in enumerate(response.json()['clips']):
         try:
@@ -82,6 +83,7 @@ def get_clips_by_lang(lang):
             print(clip['broadcaster']['name'])
             if i == 0:
                 first_title = clip['title']
+                first_streamer = clip['broadcaster']['name']
             clip_duration = get_clip(twitch_oauth_token,
                                      clip['url'], clip['broadcaster']['name'], i)
             complete_duration += clip_duration
@@ -92,4 +94,4 @@ def get_clips_by_lang(lang):
         except Exception as e:
             logging.error(str(e))
     logging.info('Download finished')
-    return result, first_title
+    return result, first_title, first_streamer
