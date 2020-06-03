@@ -171,8 +171,13 @@ def upload_video(title, file_path, description, category, tags):
 
 
 def upload_thumbnail(video_id, file):
-    youtube = get_authenticated_service()
-    youtube.thumbnails().set(
-        videoId=video_id,
-        media_body=file
-    ).execute()
+    try:
+        youtube = get_authenticated_service()
+        youtube.thumbnails().set(
+            videoId=video_id,
+            media_body=file
+        ).execute()
+        logging.info('Thumbnail uploaded')
+    except HttpError as e:
+        print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+        logging.warning("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))

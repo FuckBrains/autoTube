@@ -27,9 +27,11 @@ def upload_video(first_clip_title):
 def upload_thumbnail(video_id, streamer_name, title):
     try:
         generate_thumbnail(streamer_name, title)
+        logging.info('Thumbnail generated')
     except ResourceWarning as e:
         message = 'Remove bg API failed. Thumbnail not created.'
         logging.warning(str(e))
         logging.warning(message)
         print(str(e), message)
-    upload_thumbnail_to_youtube(video_id, settings.DOWNLOADS_DIRECTORY + 'thumbnail.png')
+
+    upload_thumbnail_to_youtube(video_id, settings.DOWNLOADS_DIRECTORY + 'thumbnail.png')    
