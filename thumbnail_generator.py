@@ -62,7 +62,7 @@ def add_effect(img):
 
 
 def add_streamer(img, side, streamer_name):
-    streamer_img = Image.open(settings.DOWNLOADS_DIRECTORY + streamer_name + '.png')
+    streamer_img = Image.open(settings.STREAMERS_DIRECTORY + streamer_name + '.png')
     bounding_box = streamer_img.getbbox()
     streamer_img = streamer_img.crop(bounding_box)
     streamer_img = streamer_img.resize((1280, 720))
@@ -133,7 +133,7 @@ def add_text(img, side, text):
     return img
 
 def get_streamer_image(streamer_name):
-    streamer_image_path = settings.DOWNLOADS_DIRECTORY + streamer_name + '.png'
+    streamer_image_path = settings.STREAMERS_DIRECTORY + streamer_name + '.png'
     if os.path.exists(streamer_image_path):
         pass
     else:
