@@ -81,7 +81,7 @@ def add_text(img, side, text):
     front_text = Image.new('RGBA', (1280, 720))
     draw = ImageDraw.Draw(front_text)
     
-    font = ImageFont.truetype("buchanan.ttf", 160)
+    font = ImageFont.truetype(settings.RESULT_DIRECTORY + "buchanan.ttf", 160)
 
     splitted = text.split(' ')
     letters = 0
