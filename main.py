@@ -18,14 +18,20 @@ def setup():
     logging.info('Started')
 
 
-if settings.ENVIRONMENT == 'production':
-    setup()
-logging.info('Starting to clean the files')
-clean_files()
-logging.info('Files cleaned')
+def generate_video():
+    if settings.ENVIRONMENT == 'production':
+        setup()
+    logging.info('Starting to clean the files')
+    clean_files()
+    logging.info('Files cleaned')
 
-clips, first_clip_title, first_streamer = get_clips_by_lang('all')
-edit_video(clips)
-video_id = upload_video(first_clip_title)
-upload_thumbnail(video_id, first_streamer, first_clip_title)
+    clips, first_clip_title, first_streamer = get_clips_by_lang('all')
+    edit_video(clips)
+    video_id = upload_video(first_clip_title)
+    upload_thumbnail(video_id, first_streamer, first_clip_title)
 
+try:
+    generate_video()
+except Exception as e:
+    logging.error(str(e))
+    print(str(e))    
