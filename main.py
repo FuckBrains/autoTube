@@ -1,6 +1,7 @@
 import datetime
 import logging
 import settings
+import sentry_sdk
 from twitch_api import get_clips_by_lang
 from video_edition import edit_video
 from youtube_service import upload_video, upload_thumbnail
@@ -16,6 +17,7 @@ def setup():
     logging.basicConfig(filename=settings.LOGS_DIRECTORY + datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.log', level=logging.INFO,
                         format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
     logging.info('Started')
+    sentry_sdk.init("https://a4e938ae150e45dbbb6c4b1ac61d96a7@o410550.ingest.sentry.io/5284600")
 
 
 def generate_video():
