@@ -12,7 +12,7 @@ from cleaning import clean_files
 # clips = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
 # first_title = 'RandomTitle'
 video_id = 'yCOSJT_xTAc'
-first_title = 'MIS TATUAJES!'
+first_clip_title = 'MIS TATUAJES!'
 first_streamer = 'peereira7'
 
 def setup():
