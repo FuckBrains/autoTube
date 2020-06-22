@@ -193,7 +193,8 @@ class googleimagesdownload:
                 headers = {}
                 headers['User-Agent'] = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
                 req = urllib.request.Request(url, headers=headers)
-                resp = urllib.request.urlopen(req)
+                context = ssl._create_unverified_context()
+                resp = urllib.request.urlopen(req, context=context)
                 respData = str(resp.read())
                 return self._image_objects_from_pack(self._extract_data_pack(respData)), self.get_all_tabs(respData)
             except Exception as e:
@@ -206,7 +207,8 @@ class googleimagesdownload:
                 headers['User-Agent'] = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17"
                 req = urllib2.Request(url, headers=headers)
                 try:
-                    response = urllib2.urlopen(req)
+                    context = ssl._create_unverified_context()
+                    response = urllib2.urlopen(req, context=context)
                 except URLError:  # Handling SSL certificate failed
                     context = ssl._create_unverified_context()
                     response = urlopen(req, context=context)
@@ -718,7 +720,8 @@ class googleimagesdownload:
                 else:
                     timeout = 10
 
-                response = urlopen(req, None, timeout)
+                context = ssl._create_unverified_context()
+                response = urlopen(req, None, timeout, context=context)
                 data = response.read()
                 info = response.info()
                 response.close()

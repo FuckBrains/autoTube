@@ -11,9 +11,9 @@ from cleaning import clean_files
 # clips = ['0', '1']
 # clips = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
 # first_title = 'RandomTitle'
-video_id = 'yCOSJT_xTAc'
-first_clip_title = 'MIS TATUAJES!'
-first_streamer = 'peereira7'
+# video_id = 'yCOSJT_xTAc'
+# first_clip_title = 'MIS TATUAJES!'
+# first_streamer = 'peereira7'
 
 def setup():
     logging.basicConfig(filename=settings.LOGS_DIRECTORY + datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S') + '.log', level=logging.INFO,
@@ -23,15 +23,15 @@ def setup():
 
 
 def generate_video():
-    # if settings.ENVIRONMENT == 'production':
-    #     setup()
-    # logging.info('Starting to clean the files')
-    # clean_files()
-    # logging.info('Files cleaned')
+    if settings.ENVIRONMENT == 'production':
+        setup()
+    logging.info('Starting to clean the files')
+    clean_files()
+    logging.info('Files cleaned')
 
-    # clips, first_clip_title, first_streamer = get_clips_by_lang('all')
-    # edit_video(clips)
-    # video_id = upload_video(first_clip_title)
+    clips, first_clip_title, first_streamer = get_clips_by_lang('all')
+    edit_video(clips)
+    video_id = upload_video(first_clip_title)
     upload_thumbnail(video_id, first_streamer, first_clip_title)
 
 try:
