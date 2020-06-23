@@ -29,7 +29,7 @@ def generate_video():
     clean_files()
     logging.info('Files cleaned')
 
-    clips, first_clip_title, first_streamer = get_clips_by_lang('all')
+    clips, first_clip_title, first_streamer = get_clips_by_lang('en')
     edit_video(clips)
     video_id = upload_video(first_clip_title)
     upload_thumbnail(video_id, first_streamer, first_clip_title)
