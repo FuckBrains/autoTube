@@ -26,10 +26,10 @@ def edit_video(broadcasters):
         clip = VideoFileClip(filename, target_resolution=forced_resolution)  # 6it/s
         if clip.duration > 194:
             continue
-        text_clip = TextClip(txt=broadcasters[i], font='Burbank Big Condensed Black',
-                             fontsize=200, color='white', stroke_color='black',
-                             stroke_width=5).set_position(('right', 'top')).set_duration(clip.duration)
-        clip = CompositeVideoClip([clip, text_clip])
+        # text_clip = TextClip(txt=broadcasters[i], font='Burbank Big Condensed Black',
+        #                      fontsize=200, color='white', stroke_color='black',
+        #                      stroke_width=5).set_position(('right', 'top')).set_duration(clip.duration)
+        # clip = CompositeVideoClip([clip, text_clip])
 
         # audio_clip = AudioFileClip('music/' + str(audio_iterator) + '.mp3')
         # while audio_clip.duration < clip.duration:

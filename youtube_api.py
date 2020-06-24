@@ -42,7 +42,6 @@ RETRIABLE_STATUS_CODES = [500, 502, 503, 504]
 #   https://developers.google.com/youtube/v3/guides/authentication
 # For more information about the client_secrets.json file format, see:
 #   https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
-CLIENT_SECRETS_FILE = settings.CLIENT_SECRET_PATH
 
 # This OAuth 2.0 access scope allows an application to upload files to the
 # authenticated user's YouTube channel, but doesn't allow other types of access.
@@ -58,15 +57,14 @@ WARNING: Please configure OAuth 2.0
 To make this sample run you will need to populate the client_secrets.json file
 found at:
 
-   %s
+   
 
 with information from the Developers Console
 https://console.developers.google.com/
 
 For more information about the client_secrets.json file format, please visit:
 https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
-""" % os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                   CLIENT_SECRETS_FILE))
+"""
 
 VALID_PRIVACY_STATUSES = ("public", "private", "unlisted")
 SCOPES = ['https://www.googleapis.com/auth/youtube']
@@ -74,16 +72,16 @@ API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
 
-def get_authenticated_service():
+def get_authenticated_service(game):
     # flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
     # credentials = flow.run_console()
     # return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
-    flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE,
+    flow = flow_from_clientsecrets(settings.GAMES[game]['client_secrets_file'],
                                    scope=YOUTUBE_UPLOAD_SCOPE,
                                    message=MISSING_CLIENT_SECRETS_MESSAGE)
 
-    storage = Storage(settings.CREDENTIALS_PATH)
+    storage = Storage(settings.GAMES[game]['credentials'])
     credentials = storage.get()
 
     if credentials is None or credentials.invalid:
@@ -95,15 +93,15 @@ def get_authenticated_service():
                  http=credentials.authorize(httplib2.Http()))
 
 
-def initialize_upload(youtube, file_path, title, description, category, tags):
+def initialize_upload(youtube, file_path, title, description, category, tags, language):
     body = dict(
         snippet=dict(
             title=title,
             description=description,
             tags=tags,
             categoryId=category,
-            defaultLanguage='en',
-            defaultAudioLanguage='en'
+            defaultLanguage=language,
+            defaultAudioLanguage=language
         ),
         status=dict(
             privacyStatus="public"
@@ -157,22 +155,23 @@ def resumable_upload(insert_request):
             time.sleep(sleep_seconds)
 
 
-def upload_video(title, file_path, description, category, tags):
+def upload_video(game, title, file_path, description, category, tags):
     logging.info('Starting youtube auth service')
-    youtube = get_authenticated_service()
+    youtube = get_authenticated_service(game)
+    language = settings.GAMES[game]['language']
     try:
         logging.info('Starting upload process')
         video_id = initialize_upload(youtube, file_path, title,
-                          description, category, tags)
+                          description, category, tags, language)
         logging.info('video uploaded')
         return video_id
     except HttpError as e:
         print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
 
-def upload_thumbnail(video_id, file):
+def upload_thumbnail(game, video_id, file):
     try:
-        youtube = get_authenticated_service()
+        youtube = get_authenticated_service(game)
         youtube.thumbnails().set(
             videoId=video_id,
             media_body=file
