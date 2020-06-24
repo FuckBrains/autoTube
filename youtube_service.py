@@ -10,12 +10,11 @@ emotes = ['🔥', '⭐', '💀', '📹', '😈', '🙀', '⚡', '🏆', '🎮', 
 def upload_video(game, first_clip_title):
     file_path = settings.RESULT_DIRECTORY + 'result.mp4'
     random_emote = random.choice(emotes)
-    game_dict = settings[game]
     title = random_emote + ' ' + first_clip_title.title().replace('!', '').replace('.',
-                                                                                   '').upper() + '!' + ' ' + random_emote + game_dict['title_tail']
-    description = game_dict['description']
-    category = game_dict['category']
-    tags = game_dict['tags']
+                                                                                   '').upper() + '!' + ' ' + random_emote + game['title_tail']
+    description = game['description']
+    category = game['category']
+    tags = game['tags']
     video_id = upload_video_to_youtube(game, title, file_path, description, category, tags)
     return video_id
 

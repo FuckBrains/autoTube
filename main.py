@@ -23,12 +23,12 @@ def setup():
     sentry_sdk.init("https://a4e938ae150e45dbbb6c4b1ac61d96a7@o410550.ingest.sentry.io/5284600")
 
 
-def generate_video(game):
+def generate_video(game_key):
     logging.info('Starting to clean the files')
     clean_files()
     logging.info('Files cleaned')
-
-    clips, first_clip_title, first_streamer = get_clips_by_lang(game, 'en')
+    game = settings.GAMES[game_key]
+    clips, first_clip_title, first_streamer = get_clips_by_lang(game)
     edit_video(clips)
     video_id = upload_video(game, first_clip_title)
     upload_thumbnail(game, video_id, first_streamer, first_clip_title)

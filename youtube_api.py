@@ -77,11 +77,11 @@ def get_authenticated_service(game):
     # credentials = flow.run_console()
     # return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
-    flow = flow_from_clientsecrets(settings.GAMES[game]['client_secrets_file'],
+    flow = flow_from_clientsecrets(game['client_secrets_file'],
                                    scope=YOUTUBE_UPLOAD_SCOPE,
                                    message=MISSING_CLIENT_SECRETS_MESSAGE)
 
-    storage = Storage(settings.GAMES[game]['credentials'])
+    storage = Storage(game['credentials'])
     credentials = storage.get()
 
     if credentials is None or credentials.invalid:
@@ -158,7 +158,7 @@ def resumable_upload(insert_request):
 def upload_video(game, title, file_path, description, category, tags):
     logging.info('Starting youtube auth service')
     youtube = get_authenticated_service(game)
-    language = settings.GAMES[game]['language']
+    language = game['language']
     try:
         logging.info('Starting upload process')
         video_id = initialize_upload(youtube, file_path, title,

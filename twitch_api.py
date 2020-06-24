@@ -57,15 +57,13 @@ def get_twitch_oauth_token():
     return response.json()['access_token']
 
 
-def get_clips_by_lang(game, lang):
-    if lang != 'all':
-        lang_request = '&language=' + lang
-    else:
-        lang_request = ''
-
+def get_clips_by_lang(game):
+    lang = game['language']
+    lang_request = '&language=' + lang
+    
     try:
         twitch_oauth_token = get_twitch_oauth_token()
-        response = requests.get('https://api.twitch.tv/kraken/clips/top?game=' + settings.GAMES[game].language +
+        response = requests.get('https://api.twitch.tv/kraken/clips/top?game=' + game['game_name'] +
                                 '&period=' + 'day' +
                                 '&limit=' + '100' +
                                 lang_request, headers=headers)

@@ -1,6 +1,7 @@
 from youtube_api import upload_video as upload_video_to_youtube
+import settings
 
-game = 'lol_es'
+game = settings.GAMES['lol_es']
 title = 'Test title'
 file_path = '/home/jorge/IdeaProjects/autoTube/test_video.mp4'
 description = 'test description'
