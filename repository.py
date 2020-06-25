@@ -22,4 +22,5 @@ def get_game_current_number(game_key):
     c = conn.cursor()
     c.execute(sql, task)
     row = c.fetchone()
+    conn.close()
     return row[0]            
