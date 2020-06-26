@@ -82,7 +82,8 @@ def get_clips_by_lang(game):
             if i == 0:
                 first_title = clip['title']
             if i <= 2:
-                top_3_streamers = top_3_streamers.append(clip['broadcaster']['name'])
+                top_3_streamers.append(clip['broadcaster']['name'])
+            
             clip_duration = get_clip(twitch_oauth_token,
                                      clip['url'], clip['broadcaster']['name'], i)
             complete_duration += clip_duration
