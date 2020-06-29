@@ -5,7 +5,7 @@ from repository import get_game_current_number, update_game_current_number
 
 game = settings.GAMES['lol_es']
 title = 'Test title'
-file_path = '/home/jorge/IdeaProjects/autoTube/test_video.mp4'
+file_path = settings.RESULT_DIRECTORY + 'test_video.mp4'
 description = 'test description'
 category = 20
 tags = ['test tag']
