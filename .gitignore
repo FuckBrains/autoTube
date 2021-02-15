@@ -5,4 +5,5 @@
 *.xml
 *.iml
 settings.py
+test.py
 database.db
