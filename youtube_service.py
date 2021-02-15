@@ -18,7 +18,7 @@ def upload_video(game, first_clip_title, top_3_streamers):
     tags = game['tags'] + top_3_streamers
     description = game['description'] + '\n\n\n' + title + '\n\n\n' + ', '.join(tags)
     category = game['category']
-    
+
     video_id = upload_video_to_youtube(game, title, file_path, description, category, tags)
     update_game_current_number(game['key'], current_number)
     return video_id
@@ -33,4 +33,5 @@ def upload_thumbnail(game, video_id, streamer_name, title):
         logging.warning(message)
         print(str(e), message)
 
-    upload_thumbnail_to_youtube(game, video_id, settings.DOWNLOADS_DIRECTORY + 'thumbnail.png')    
+    upload_thumbnail_to_youtube(game, video_id, settings.DOWNLOADS_DIRECTORY + 'thumbnail.png')
+
