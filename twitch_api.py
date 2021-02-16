@@ -3,6 +3,7 @@ import requests
 import sys
 import logging
 import settings
+import time
 from moviepy.editor import *
 from settings import CLIENTID
 
@@ -63,10 +64,18 @@ def get_clips_by_lang(game):
     
     try:
         twitch_oauth_token = get_twitch_oauth_token()
-        response = requests.get('https://api.twitch.tv/kraken/clips/top?game=' + game['game_name'] +
+        response = None
+        responseHasClips = False
+        tries = 0
+        while responseHasClips == False and tries < 5:
+            response = requests.get('https://api.twitch.tv/kraken/clips/top?game=' + game['game_name'] +
                                 '&period=' + 'day' +
-                                '&limit=' + '100' +
+                                '&limit=' + '2' +
                                 lang_request, headers=headers)
+            responseHasClips = 'clips' in response.json()
+            tries = tries + 1
+            time.sleep(30)
+
         logging.info('Clips list info downloaded correctly')                        
 
     except Exception as e:

@@ -1,6 +1,7 @@
 import random
 import settings
 import logging
+import time 
 from youtube_api import upload_video as upload_video_to_youtube, upload_thumbnail as upload_thumbnail_to_youtube
 from thumbnail_generator import generate_thumbnail
 from repository import get_game_current_number, update_game_current_number
@@ -18,8 +19,12 @@ def upload_video(game, first_clip_title, top_3_streamers):
     tags = game['tags'] + top_3_streamers
     description = game['description'] + '\n\n\n' + title + '\n\n\n' + ', '.join(tags)
     category = game['category']
-
-    video_id = upload_video_to_youtube(game, title, file_path, description, category, tags)
+    video_id = None
+    tries = 0
+    while video_id == None and tries < 5:
+        video_id = upload_video_to_youtube(game, title, file_path, description, category, tags)
+        tries = tries + 1
+        time.sleep(5)
     update_game_current_number(game['key'], current_number)
     return video_id
 
