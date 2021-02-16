@@ -70,7 +70,7 @@ def get_clips_by_lang(game):
         while responseHasClips == False and tries < 5:
             response = requests.get('https://api.twitch.tv/kraken/clips/top?game=' + game['game_name'] +
                                 '&period=' + 'day' +
-                                '&limit=' + '2' +
+                                '&limit=' + '100' +
                                 lang_request, headers=headers)
             responseHasClips = 'clips' in response.json()
             tries = tries + 1
