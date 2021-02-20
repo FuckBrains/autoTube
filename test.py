@@ -3,6 +3,9 @@ import settings
 import sqlite3
 from repository import get_game_current_number, update_game_current_number
 from youtube_service import upload_video
+from youtube_api import upload_video as upload_video_api
+from thumbnail_generator_v2 import generate_thumbnail
+
 
 # game = settings.GAMES['lol_es']
 # title = 'Test title'
@@ -25,4 +28,6 @@ from youtube_service import upload_video
 # current_number = get_game_current_number('fortnite_en')
 # print(current_number)
 game = settings.GAMES['lol_es']
-upload_video(game, 'elmillor lo da todo', ['elmillor', 'coscu'])
+# upload_video(game, 'elmillor lo da todo', ['elmillor', 'coscu'])
+# upload_video_api(game, 'test title', file_path, 'test description', 20, ['test tag'])
+generate_thumbnail(game, 123)

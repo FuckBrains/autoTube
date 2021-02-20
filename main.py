@@ -1,6 +1,7 @@
 import datetime
 import logging
 import settings
+import game_config
 import sentry_sdk
 import argparse
 from twitch_api import get_clips_by_lang
@@ -27,7 +28,7 @@ def generate_video(game_key):
     logging.info('Starting to clean the files')
     clean_files()
     logging.info('Files cleaned')
-    game = settings.GAMES[game_key]
+    game = game_config.GAMES[game_key]
     clips, first_clip_title, top_3_streamers = get_clips_by_lang(game)
     edit_video(clips)
     video_id = upload_video(game, first_clip_title, top_3_streamers)
@@ -39,7 +40,7 @@ if settings.ENVIRONMENT == 'production':
 parser = argparse.ArgumentParser(description='Process game key.')
 parser.add_argument('--game')
 args = parser.parse_args()
-if args.game in settings.GAMES.keys():
+if args.game in game_config.GAMES.keys():
     generate_video(args.game)
 else:
     print(args.game, 'not a valid game')    

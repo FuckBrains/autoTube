@@ -77,11 +77,11 @@ def get_authenticated_service(game):
     # credentials = flow.run_console()
     # return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
-    flow = flow_from_clientsecrets(game['client_secrets_file'],
+    flow = flow_from_clientsecrets(settings.RESULT_DIRECTORY + game['client_secrets_file'],
                                    scope=YOUTUBE_UPLOAD_SCOPE,
                                    message=MISSING_CLIENT_SECRETS_MESSAGE)
 
-    storage = Storage(game['credentials'])
+    storage = Storage(settings.RESULT_DIRECTORY + game['credentials'])
     credentials = storage.get()
 
     if credentials is None or credentials.invalid:
