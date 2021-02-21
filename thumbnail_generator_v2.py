@@ -5,7 +5,7 @@ def generate_thumbnail(game, number):
     x = game['thumbnail_number_x']
     y = game['thumbnail_number_y']
     
-    img = Image.open(game['thumbnail_file'])
+    img = Image.open(settings.RESULT_DIRECTORY + game['thumbnail_file'])
     numbers_directory = settings.UTILS_DIRECTORY
     number = str(number)
 
