@@ -40,7 +40,7 @@ def generate_thumbnail(game, number, thumbnail_url):
         for y in range(0, 720):
             thumbnail_image.putpixel((x,y), random_color)
     for x in range(0, 1280):
-        for y in range(0, 36):
+        for y in range(0, band_width):
             thumbnail_image.putpixel((x,y), random_color)
     for x in range(0, 1280):
         for y in range(720-band_width, 720):
