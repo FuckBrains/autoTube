@@ -32,17 +32,18 @@ def generate_thumbnail(game, number, thumbnail_url):
     thumbnail_image.paste(emoji_image, (emoji_x,emoji_y), emoji_image)
 
     random_color = random.choice(CMY)
-    for x in range(0, 36):
+    band_width = 36
+    for x in range(0, band_width):
         for y in range(0, 720):
             thumbnail_image.putpixel((x,y), random_color)
-    for x in range(1244, 1280):
+    for x in range(1280-band_width, 1280):
         for y in range(0, 720):
             thumbnail_image.putpixel((x,y), random_color)
     for x in range(0, 1280):
         for y in range(0, 36):
             thumbnail_image.putpixel((x,y), random_color)
     for x in range(0, 1280):
-        for y in range(684, 720):
+        for y in range(720-band_width, 720):
             thumbnail_image.putpixel((x,y), random_color)                            
 
     thumbnail_image.save(settings.DOWNLOADS_DIRECTORY + 'thumbnail.png', "PNG")
