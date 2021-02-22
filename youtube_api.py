@@ -5,6 +5,7 @@ import sys
 import time
 import logging
 import settings
+import game_config
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -68,6 +69,7 @@ https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
 
 VALID_PRIVACY_STATUSES = ("public", "private", "unlisted")
 SCOPES = ['https://www.googleapis.com/auth/youtube']
+scopes = ['https://www.googleapis.com/auth/youtube.readonly', 'https://www.googleapis.com/auth/youtube.upload']
 API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
@@ -78,7 +80,7 @@ def get_authenticated_service(game):
     # return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
     flow = flow_from_clientsecrets(settings.RESULT_DIRECTORY + game['client_secrets_file'],
-                                   scope=YOUTUBE_UPLOAD_SCOPE,
+                                   scopes,
                                    message=MISSING_CLIENT_SECRETS_MESSAGE)
 
     storage = Storage(settings.RESULT_DIRECTORY + game['credentials'])
@@ -180,3 +182,17 @@ def upload_thumbnail(game, video_id, file):
     except HttpError as e:
         print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
         logging.warning("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+
+def get_video_thumbnail(video_id):
+    thumbnails_game_credentials = game_config.GAMES['chatting_es'] #chatting_es credentials are the ones with read videos scope access
+    try:
+        youtube = get_authenticated_service(thumbnails_game_credentials)
+        request = youtube.videos().list(part="snippet", id=video_id
+        )
+        response = request.execute()
+        thumbnail_url = response['items'][0]['snippet']['thumbnails']['maxres']['url']
+        return thumbnail_url
+    except HttpError as e:
+        print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+        logging.warning("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+    

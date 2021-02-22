@@ -2,7 +2,7 @@ import random
 import settings
 import logging
 import time 
-from youtube_api import upload_video as upload_video_to_youtube, upload_thumbnail as upload_thumbnail_to_youtube
+from youtube_api import upload_video as upload_video_to_youtube, upload_thumbnail as upload_thumbnail_to_youtube, get_video_thumbnail
 from thumbnail_generator_v2 import generate_thumbnail
 from repository import get_game_current_number, update_game_current_number
 
@@ -24,15 +24,18 @@ def upload_video(game, first_clip_title, top_3_streamers):
     while video_id == None and tries < 5:
         video_id = upload_video_to_youtube(game, title, file_path, description, category, tags)
         tries = tries + 1
-        time.sleep(5)
+        time.sleep(30)
     update_game_current_number(game['key'], current_number)
-    if game['thumbnail_file'] and video_id:
+    if video_id:
         upload_thumbnail(game, current_number, video_id)
     return video_id
 
 def upload_thumbnail(game, current_number, video_id):
     try:
-        generate_thumbnail(game, current_number)
+        thumbnail_url = get_video_thumbnail(video_id)
+        logging.info('thumbnail URL: ' + thumbnail_url)
+        time.sleep(300)
+        generate_thumbnail(game, current_number, thumbnail_url)
         logging.info('Thumbnail generated')
     except ResourceWarning as e:
         message = 'Remove bg API failed. Thumbnail not created.'
