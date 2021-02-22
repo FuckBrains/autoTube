@@ -11,28 +11,38 @@ def generate_thumbnail(game, number, thumbnail_url):
     emoji_x = 100
     emoji_y = 370
     
-    CMY = ["#FFFF00", "#FF00FF", "#00FFFF"]
+    CMY = [(255,255,0), (255,0,255), (0,255,255)]
 
-    bg = Image.new("RGBA", (1280, 720), random.choice(CMY))
     thumbnail_image = Image.open(requests.get(thumbnail_url, stream=True).raw).convert('RGBA')
-    thumbnail_image = thumbnail_image.resize((1152, 648))
-    
-    bg.paste(thumbnail_image, (64,36), thumbnail_image)
     
     numbers_directory = settings.UTILS_DIRECTORY
     number = str(number)
 
     hashtag_image = Image.open(
         numbers_directory + 'hashtag.png')
-    bg.paste(hashtag_image, (number_x, number_y), hashtag_image)
+    thumbnail_image.paste(hashtag_image, (number_x, number_y), hashtag_image)
     
     for index, digit in enumerate(number):
         number_image = Image.open(numbers_directory + digit + '.png')
-        bg.paste(number_image, ((index+1)*90+number_x, number_y), number_image)
+        thumbnail_image.paste(number_image, ((index+1)*90+number_x, number_y), number_image)
     
     emoji_path = random.choice(os.listdir(settings.UTILS_DIRECTORY + 'emojis/'))
     emoji_image = Image.open(settings.UTILS_DIRECTORY + 'emojis/' + emoji_path).convert('RGBA')
     emoji_image = emoji_image.resize((300, 300))
-    bg.paste(emoji_image, (emoji_x,emoji_y), emoji_image)
+    thumbnail_image.paste(emoji_image, (emoji_x,emoji_y), emoji_image)
 
-    bg.save(settings.DOWNLOADS_DIRECTORY + 'thumbnail.png', "PNG")
+    random_color = random.choice(CMY)
+    for x in range(0, 36):
+        for y in range(0, 720):
+            thumbnail_image.putpixel((x,y), random_color)
+    for x in range(1244, 1280):
+        for y in range(0, 720):
+            thumbnail_image.putpixel((x,y), random_color)
+    for x in range(0, 1280):
+        for y in range(0, 36):
+            thumbnail_image.putpixel((x,y), random_color)
+    for x in range(0, 1280):
+        for y in range(684, 720):
+            thumbnail_image.putpixel((x,y), random_color)                            
+
+    thumbnail_image.save(settings.DOWNLOADS_DIRECTORY + 'thumbnail.png', "PNG")
