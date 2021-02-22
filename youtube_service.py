@@ -32,9 +32,9 @@ def upload_video(game, first_clip_title, top_3_streamers):
 
 def upload_thumbnail(game, current_number, video_id):
     try:
+        time.sleep(300)
         thumbnail_url = get_video_thumbnail(video_id)
         logging.info('thumbnail URL: ' + thumbnail_url)
-        time.sleep(300)
         generate_thumbnail(game, current_number, thumbnail_url)
         logging.info('Thumbnail generated')
     except ResourceWarning as e:
