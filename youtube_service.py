@@ -6,7 +6,7 @@ from youtube_api import upload_video as upload_video_to_youtube, upload_thumbnai
 from thumbnail_generator_v2 import generate_thumbnail
 from repository import get_game_current_number, update_game_current_number
 
-emotes = ['🔥', '⭐', '💀', '📹', '😈', '🙀', '⚡', '🏆', '🎮', '💣', '💎', '✅', '♠']
+emotes = ['🔥', '⭐', '💀', '😈', '🙀', '⚡', '🏆', '🎮', '💣', '💎', '✅', '♠']
 
 
 def upload_video(game, first_clip_title, top_3_streamers):
@@ -32,7 +32,7 @@ def upload_video(game, first_clip_title, top_3_streamers):
 
 def upload_thumbnail(game, current_number, video_id):
     try:
-        time.sleep(300)
+        time.sleep(600)
         thumbnail_url = get_video_thumbnail(video_id)
         logging.info('thumbnail URL: ' + thumbnail_url)
         generate_thumbnail(game, current_number, thumbnail_url)

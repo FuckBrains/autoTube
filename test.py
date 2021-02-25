@@ -1,5 +1,6 @@
 from youtube_api import upload_video as upload_video_to_youtube
 import game_config
+import settings
 import sqlite3
 from repository import get_game_current_number, update_game_current_number
 from youtube_service import upload_video
@@ -31,4 +32,4 @@ game = game_config.GAMES['chatting_es']
 # upload_video(game, 'elmillor lo da todo', ['elmillor', 'coscu'])
 # upload_video_api(game, 'test title', file_path, 'test description', 20, ['test tag'])
 thumbnail_url = get_video_thumbnail('8Kl0FmlagF0')
-generate_thumbnail(game, 202, thumbnail_url)
+# generate_thumbnail(game, 202, thumbnail_url)

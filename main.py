@@ -6,7 +6,7 @@ import sentry_sdk
 import argparse
 from twitch_api import get_clips_by_lang
 from video_edition import edit_video
-from youtube_service import upload_video, upload_thumbnail
+from youtube_service import upload_video
 from cleaning import clean_files
 
 # clips = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -32,8 +32,6 @@ def generate_video(game_key):
     clips, first_clip_title, top_3_streamers = get_clips_by_lang(game)
     edit_video(clips)
     video_id = upload_video(game, first_clip_title, top_3_streamers)
-    upload_thumbnail(game, video_id, top_3_streamers[0], first_clip_title)
-
 
 if settings.ENVIRONMENT == 'production':
     setup()
