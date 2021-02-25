@@ -128,10 +128,10 @@ def resumable_upload(insert_request):
     retry = 0
     while response is None:
         try:
-            print("Uploading file...")
+            logging.info("Uploading file...")
             status, response = insert_request.next_chunk()
             if 'id' in response:
-                print("Video id '%s' was successfully uploaded." %
+                logging.info("Video id '%s' was successfully uploaded." %
                       response['id'])
                 return response['id']      
             else:
@@ -146,14 +146,14 @@ def resumable_upload(insert_request):
             error = "A retriable error occurred: %s" % e
 
         if error is not None:
-            print(error)
+            logging.error(error)
             retry += 1
             if retry > MAX_RETRIES:
                 exit("No longer attempting to retry.")
 
             max_sleep = 2 ** retry
             sleep_seconds = random.random() * max_sleep
-            print("Sleeping %f seconds and then retrying..." % sleep_seconds)
+            logging.info("Sleeping %f seconds and then retrying..." % sleep_seconds)
             time.sleep(sleep_seconds)
 
 
@@ -168,7 +168,7 @@ def upload_video(game, title, file_path, description, category, tags):
         logging.info('video uploaded')
         return video_id
     except HttpError as e:
-        print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+        logging.error("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
 
 def upload_thumbnail(game, video_id, file):
@@ -180,7 +180,6 @@ def upload_thumbnail(game, video_id, file):
         ).execute()
         logging.info('Thumbnail uploaded')
     except HttpError as e:
-        print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
         logging.warning("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
 def get_video_thumbnail(video_id):
@@ -193,6 +192,5 @@ def get_video_thumbnail(video_id):
         thumbnail_url = response['items'][0]['snippet']['thumbnails']['maxres']['url']
         return thumbnail_url
     except HttpError as e:
-        print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
         logging.warning("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
     
