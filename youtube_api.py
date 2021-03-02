@@ -114,7 +114,7 @@ def initialize_upload(youtube, file_path, title, description, category, tags, la
     insert_request = youtube.videos().insert(
         part=",".join(body.keys()),
         body=body,
-        media_body=MediaFileUpload(file_path)
+        media_body=MediaFileUpload(file_path, chunksize=-1, resumable=True)
     )
 
     video_id = resumable_upload(insert_request)
