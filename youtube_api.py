@@ -114,7 +114,7 @@ def initialize_upload(youtube, file_path, title, description, category, tags, la
     insert_request = youtube.videos().insert(
         part=",".join(body.keys()),
         body=body,
-        media_body=MediaFileUpload(file_path, chunksize=-1, resumable=True)
+        media_body=MediaFileUpload(file_path, chunksize=1024*1024, resumable=True)
     )
 
     video_id = resumable_upload(insert_request)
@@ -144,6 +144,10 @@ def resumable_upload(insert_request):
                 raise
         except RETRIABLE_EXCEPTIONS as e:
             error = "A retriable error occurred: %s" % e
+
+        except Exception as e:
+            if error is not None:
+                logging.error(e)
 
         if error is not None:
             logging.error(error)
