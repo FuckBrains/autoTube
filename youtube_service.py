@@ -19,10 +19,12 @@ def upload_video(game, first_clip_title, top_3_streamers):
     tags = game['tags'] + top_3_streamers
     description = game['description'] + '\n\n\n' + title + '\n\n\n' + ', '.join(tags)
     category = game['category']
+    fallback_title = game['game_name'] + game['title_tail'] + ' #' + str(current_number)
     video_id = None
     tries = 0
+    logging.info(title)
     while video_id == None and tries < 5:
-        video_id = upload_video_to_youtube(game, title, file_path, description, category, tags)
+        video_id = upload_video_to_youtube(game, title, file_path, description, category, tags, fallback_title)
         tries = tries + 1
         time.sleep(30)
     update_game_current_number(game['key'], current_number)
@@ -31,17 +33,17 @@ def upload_video(game, first_clip_title, top_3_streamers):
     return video_id
 
 def upload_thumbnail(game, current_number, video_id):
-    try:
-        time.sleep(600)
-        thumbnail_url = get_video_thumbnail(video_id)
-        logging.info('thumbnail URL: ' + thumbnail_url)
-        generate_thumbnail(game, current_number, thumbnail_url)
-        logging.info('Thumbnail generated')
-    except ResourceWarning as e:
-        message = 'Remove bg API failed. Thumbnail not created.'
-        logging.warning(str(e))
-        logging.warning(message)
-        print(str(e), message)
-
+    tries = 0
+    thumbnail_url = None
+    while thumbnail_url == None and tries < 5:
+        try:
+            time.sleep(600)
+            thumbnail_url = get_video_thumbnail(video_id)
+            logging.info('thumbnail URL: ' + thumbnail_url)
+            generate_thumbnail(game, current_number, thumbnail_url)
+            logging.info('Thumbnail generated')
+        except KeyError:
+            logging.warning('Maxres thumbnail not found.')
+        tries = tries + 1        
     upload_thumbnail_to_youtube(game, video_id, settings.DOWNLOADS_DIRECTORY + 'thumbnail.png')
 

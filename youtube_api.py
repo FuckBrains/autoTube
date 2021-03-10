@@ -161,7 +161,7 @@ def resumable_upload(insert_request):
             time.sleep(sleep_seconds)
 
 
-def upload_video(game, title, file_path, description, category, tags):
+def upload_video(game, title, file_path, description, category, tags, fallback_title):
     logging.info('Starting youtube auth service')
     youtube = get_authenticated_service(game)
     language = game['language']
@@ -173,6 +173,11 @@ def upload_video(game, title, file_path, description, category, tags):
         return video_id
     except HttpError as e:
         logging.error("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+        if str(e.content).find('invalidTitle'):
+            video_id = initialize_upload(youtube, file_path, fallback_title,
+                          description, category, tags, language)
+            logging.info('video uploaded with fallback title')
+            return video_id
 
 
 def upload_thumbnail(game, video_id, file):
