@@ -28,7 +28,7 @@ from thumbnail_generator_v2 import generate_thumbnail
 # update_game_current_number('ark_es', 4)
 # current_number = get_game_current_number('fortnite_en')
 # print(current_number)
-game = game_config.GAMES['chatting_es']
+game = game_config.GAMES['ark_es']
 # upload_video(game, 'elmillor lo da todo', ['elmillor', 'coscu'])
 # upload_video_api(game, 'test title', file_path, 'test description', 20, ['test tag'])
 thumbnail_url = get_video_thumbnail('8Kl0FmlagF0')
