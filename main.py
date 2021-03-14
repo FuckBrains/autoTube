@@ -29,9 +29,9 @@ def generate_video(game_key):
     clean_files()
     logging.info('Files cleaned')
     game = game_config.GAMES[game_key]
-    clips, first_clip_title, top_3_streamers = get_clips_by_lang(game)
+    clips, first_clip_title = get_clips_by_lang(game)
     edit_video(clips)
-    video_id = upload_video(game, first_clip_title, top_3_streamers)
+    video_id = upload_video(game, first_clip_title)
 
 if settings.ENVIRONMENT == 'production':
     setup()
