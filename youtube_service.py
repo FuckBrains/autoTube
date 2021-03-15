@@ -15,7 +15,7 @@ def upload_video(game, first_clip_title):
     current_number = get_game_current_number(game['key']) + 1
     title = random_emote + ' ' + first_clip_title.title().replace('!', '').replace('.',
                                                                                    '').upper() + '!' + ' ' + random_emote + game['title_tail'] + ' #' + str(current_number)
-    tags = game['tags'] + top_3_streamers
+    tags = game['tags']
     description = game['description'] + '\n\n\n' + title + '\n\n\n' + ', '.join(tags)
     category = game['category']
     fallback_title = game['game_name'] + game['title_tail'] + ' #' + str(current_number)
