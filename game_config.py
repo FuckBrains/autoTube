@@ -24,11 +24,10 @@ GAMES = {
         'description': 'Los mejores momentos de League of Legends España!, WTF Moments & Epic Moments! ' \
                         'LoL Fails, Wins, Mejores momentos!' \
                         'Si te gusta, por favor dale like y suscríbete!',
-        'tags': ['lol', 'league of legends', 'league', 'best', 'clips', 'momentos', 'wins', 'fails', 'diario', 'like', 'wtf', 'mejores',
-            'funny', 'plays', 'best', 'lol clips', 'lol moments', 'elmillor',
-            'lol wins', 'lol fails', 'lol diario', 'lol like', 'lol wtf',
-            'league of legends highlights', 'epic', 'ibai', 'werlyb',
-            'antonio', 'elojoninja'],
+        'tags': ["challenge","electrokidi","elmiillor","elmillor","faka","ibai","kami","league of legends",
+        "lol mejores momentos","mejores momentos","soloq","soloqchallenge","streamings","th3antonio","torneo",
+        "twitch","twitch españa","elojoninja","ojoninja","lol españa","lol latinoamerica","lol latino","lol latam",
+        "league latinoamerica","knekro","littleragergirl","abby","elm","werlyb","attila","fakka"],
         'category': 20,
         'client_secrets_file': 'loles_client_secrets.json',
         'credentials': 'loles_credentials.json',
