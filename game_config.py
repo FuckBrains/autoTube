@@ -20,7 +20,7 @@ GAMES = {
         'key': 'lol_es',
         'game_name': 'League of Legends',
         'language': 'es',
-        'title_tail': ' - MEJORES MOMENTOS LEAGUE OF LEGENDS ESPAÑOL',
+        'title_tail': 'MOMENTOS LOL ESPAÑA Y LATINOAMERICA',
         'description': 'Los mejores momentos de League of Legends España!, WTF Moments & Epic Moments! ' \
                         'LoL Fails, Wins, Mejores momentos!' \
                         'Si te gusta, por favor dale like y suscríbete!',
