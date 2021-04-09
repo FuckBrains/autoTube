@@ -27,7 +27,7 @@ GAMES = {
         'tags': ["challenge","electrokidi","elmiillor","elmillor","faka","ibai","kami","league of legends",
         "lol mejores momentos","mejores momentos","soloq","soloqchallenge","streamings","th3antonio","torneo",
         "twitch","twitch españa","elojoninja","ojoninja","lol españa","lol latinoamerica","lol latino","lol latam",
-        "league latinoamerica","knekro","littleragergirl","abby","elm","werlyb","attila","fakka"],
+        "league latinoamerica","knekro","littleragergirl","abby","elm","werlyb","attila","fakka","lol diario"],
         'category': 20,
         'client_secrets_file': 'loles_client_secrets.json',
         'credentials': 'loles_credentials.json',
