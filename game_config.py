@@ -35,20 +35,18 @@ GAMES = {
         'thumbnail_number_x': 700,
         'thumbnail_number_y': 425   
     },
-    'ark_es': {
-        'key': 'ark_es',
-        'game_name': 'ARK: Survival Evolved',
+    'marbella_vice': {
+        'key': 'marbella_vice',
+        'game_name': 'Grand Theft Auto V',
         'language': 'es',
-        'title_tail': ' - MEJORES MOMENTOS ARKADIA ESPAÑOL',
-        'description': 'Los mejores momentos de ARK: Survival Evolved en el servidor de ARKADIA!, WTF Moments & Epic Moments! ' \
-                        'Ark Fails, Arkadia, Wins, Mejores momentos!' \
-                        'Si te gusta, por favor dale like y suscríbete!',
-        'tags': ['best', 'clips', 'momentos', 'wins', 'fails', 'diario', 'like', 'wtf', 'mejores',
-            'funny', 'plays', 'ark clips', 'ark moments', 'alexby',
-            'arkadia wins', 'ark highlights', 'epico', 'arkadia', 'knekro', 
-            'paula gonu', 'ark', 'survival', 'evolved', 'arkadia', 'willyrex', 
-            'rubius' ,'vegeta', 'ibai', 'luzugames', 'alvaro845', 'withzack', 
-            'djmariio', 'cristinini', 'djmario', 'agentemaxo', 'orslok', 'illojuan'],
+        'title_tail': ' - MEJORES MOMENTOS MARBELLA VICE',
+        'description': 'Los mejores momentos de Ibai y compañia en el servidor de MARBELLA VICE! ' \
+                        'Risas, peleas, enfados, retos, momentos increibles y mucho mas!' \
+                        'Si te gusta, dale like y suscríbete!',
+        'tags': ['knekro', 'paula gonu', 'rubius' ,'vegeta', 'ibai', 'cristinini', 
+        'djmario', 'orslok', 'illojuan', 'marbella vice', 'mejores momentos', 'gta ibai', 'grand theft auto',
+        'marbella ibai', 'marbella gta', 'marbella latinoamerica', 'gta latinoamerica', 'vice ibai', 'gta twitch',
+        'momentos gta', 'momentos streaming', 'gta streaming', 'marbella vice streaming', 'marbella vice diario'],
         'category': 20,
         'client_secrets_file': 'arkes_client_secrets.json',
         'credentials': 'arkes_credentials.json'   
