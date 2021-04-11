@@ -10,7 +10,10 @@ def fix_final_clip(final_clip):
 
 def edit_video(broadcasters):
     clips = []
-    # audio_iterator = 0
+    sub_clip_path = settings.RESULT_DIRECTORY + 'sub.mov'
+    sub_clip = VideoFileClip(sub_clip_path)
+    masked_sub_clip = vfx.mask_color(sub_clip, color=[0,0,0])
+
     logging.info('Starting video edit')
     for i in range(len(broadcasters)):
 
@@ -40,6 +43,8 @@ def edit_video(broadcasters):
 
         # composed_audio = CompositeAudioClip([clip.audio, audio_clip.volumex(0.2)])
         # fusion_clip = clip.set_audio(composed_audio)
+        if i == 5:
+            clip = CompositeVideoClip([clip, masked_sub_clip])
         clips.append(clip)
 
     outro = VideoFileClip(settings.UTILS_DIRECTORY + 'outro.mp4')
