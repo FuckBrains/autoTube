@@ -9,14 +9,41 @@ from repository import get_game_current_number, update_game_current_number
 emotes = ['🔥', '⭐', '💀', '😈', '🙀', '⚡', '🏆', '🎮', '💣', '💎', '✅', '♠']
 
 
-def upload_video(game, first_clip_title, top_3_streamers):
-    file_path = settings.RESULT_DIRECTORY + 'result.mp4'
+def generate_title(game, first_clip_title, current_number, top_3_streamers):
     random_emote = random.choice(emotes)
-    current_number = get_game_current_number(game['key']) + 1
     filtered_streamers = set(top_3_streamers)
-    title = random_emote + ' ' + first_clip_title.title().replace('!', '').replace('.', '').upper() + '!' + ' ' + random_emote + ' ' + game['title_tail'] + ' #' + str(current_number)  + ' Ft. ' + ', '.join(filtered_streamers)
+    return random_emote + ' ' + first_clip_title.title().replace('!', '').replace('.', '').upper() + '!' + ' ' + random_emote + ' ' + game['title_tail'] + ' #' + str(current_number)  + ' Ft. ' + ', '.join(filtered_streamers)
+
+def generate_chapters_section(streamer_names, clip_durations):
+    seconds = 0
+    minuts = 0
+    chapters_lines = '________________________\n\n\n'
+    for index, duration in enumerate(clip_durations):
+        seconds_string = str(seconds) if len(str(seconds)) == 2 else '0' + str(seconds)
+        minuts_string = str(minuts) if len(str(minuts)) == 2 else '0' + str(minuts)
+        chapters_lines += minuts_string + ':' + seconds_string + ' ' + streamer_names[index] + '\n'
+        seconds += duration
+        if seconds >= 60:
+            seconds = seconds - 60
+            minuts += 1
+    return chapters_lines     
+
+
+def generate_streamer_links_section(streamer_names):
+    link_lines = 'CLIPS de los siguientes STREAMERS:\n\n\n'
+    for name in streamer_names:
+        link_lines += 'https://www.twitch.tv/' + name + '\n\n'
+    return link_lines
+
+def generate_description(game, title, tags, streamer_names, clip_durations):
+    return game['description'] + '\n\n\n' + title + '\n\n\n' + generate_streamer_links_section(streamer_names) + '\n' + generate_chapters_section(streamer_names, clip_durations)  + '\n\n' + ', '.join(tags)
+
+def upload_video(game, first_clip_title, top_3_streamers, streamer_names, clip_durations):
+    file_path = settings.RESULT_DIRECTORY + 'result.mp4'
+    current_number = get_game_current_number(game['key']) + 1
     tags = game['tags'] + top_3_streamers
-    description = game['description'] + '\n\n\n' + title + '\n\n\n' + ', '.join(tags)
+    title = generate_title(game, first_clip_title, current_number, top_3_streamers)
+    description = generate_description(game, title, tags, streamer_names, clip_durations)
     category = game['category']
     fallback_title = game['game_name'] + game['title_tail'] + ' #' + str(current_number)
     video_id = None

@@ -80,7 +80,8 @@ def get_clips_by_lang(game):
 
     except Exception as e:
         logging.error(str(e))
-    result = []
+    streamer_names = []
+    clip_durations = []
     first_title = ''
     top_3_streamers = []
     complete_duration = 0
@@ -96,11 +97,12 @@ def get_clips_by_lang(game):
             clip_duration = get_clip(twitch_oauth_token,
                                      clip['url'], clip['broadcaster']['name'], i)
             complete_duration += clip_duration
-            result.append(clip['broadcaster']['name'])
+            streamer_names.append(clip['broadcaster']['name'])
+            clip_durations.append(clip_duration)
 
             if complete_duration >= 585:
                 break
         except Exception as e:
             logging.error(str(e))
     logging.info('Download finished')
-    return result, first_title, top_3_streamers
+    return streamer_names, first_title, top_3_streamers, clip_durations
