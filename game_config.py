@@ -21,9 +21,9 @@ GAMES = {
         'game_name': 'League of Legends',
         'language': 'es',
         'title_tail': 'MOMENTOS LOL ESPAÑA Y LATINOAMERICA',
-        'description': 'Los mejores momentos de League of Legends España!, WTF Moments & Epic Moments! ' \
-                        'LoL Fails, Wins, Mejores momentos!' \
-                        'Si te gusta, por favor dale like y suscríbete!',
+        'description': 'Los mejores momentos de League of Legends España!, WTF Moments & Epic Moments! \n' \
+                        'LoL Fails, Wins, Mejores momentos! \n' \
+                        'Si te gusta, dale like y suscríbete!',
         'tags': ["challenge","electrokidi","elmiillor","elmillor","faka","ibai","kami","league of legends",
         "lol mejores momentos","mejores momentos","soloq","soloqchallenge","streamings","th3antonio","torneo",
         "twitch","twitch españa","elojoninja","ojoninja","lol españa","lol latinoamerica","lol latino","lol latam",

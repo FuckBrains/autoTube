@@ -13,9 +13,12 @@ def generate_title(game, first_clip_title, current_number, top_3_streamers):
     title = ''
     random_emote = random.choice(emotes)
     filtered_streamers = set(top_3_streamers)
-    title = random_emote + ' ' + first_clip_title.title().replace('!', '').replace('.', '').upper() + '!' + ' ' + random_emote + ' ' + game['title_tail'] + ' #' + str(current_number) + ' Ft. '
-    for name in filtered_streamers:
-        provisional = title + ', ' + name
+    title = random_emote + ' ' + first_clip_title.title().replace('!', '').replace('.', '').upper() + '!' + ' ' + random_emote + ' ' + game['title_tail'] + ' #' + str(current_number)
+    for index, name in enumerate(filtered_streamers):
+        if index == 0:
+            provisional = title + ' Ft. ' + name
+        else:    
+            provisional = title + ', ' + name
         if len(provisional) <= 100:
             title = provisional
     
@@ -24,7 +27,7 @@ def generate_title(game, first_clip_title, current_number, top_3_streamers):
 def generate_chapters_section(streamer_names, clip_durations):
     seconds = 0
     minuts = 0
-    chapters_lines = '________________________\n\n\n'
+    chapters_lines = '_____________________________\n\n\n'
     for index, duration in enumerate(clip_durations):
         seconds_string = str(seconds) if len(str(seconds)) == 2 else '0' + str(seconds)
         minuts_string = str(minuts) if len(str(minuts)) == 2 else '0' + str(minuts)
@@ -37,9 +40,12 @@ def generate_chapters_section(streamer_names, clip_durations):
 
 
 def generate_streamer_links_section(streamer_names):
-    link_lines = 'CLIPS de los siguientes STREAMERS:\n\n\n'
+    link_lines = 'CLIPS de los siguientes STREAMERS:\n\n'
+    links = []
     for name in streamer_names:
-        link_lines += 'https://www.twitch.tv/' + name + '\n\n'
+        links.append('https://www.twitch.tv/' + name + '\n\n')
+    links = set(links)
+    link_lines += ''.join(links)    
     return link_lines
 
 def generate_description(game, title, tags, streamer_names, clip_durations):
