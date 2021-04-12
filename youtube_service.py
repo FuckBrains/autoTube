@@ -32,7 +32,7 @@ def generate_chapters_section(streamer_names, clip_durations):
         seconds_string = str(seconds) if len(str(seconds)) == 2 else '0' + str(seconds)
         minuts_string = str(minuts) if len(str(minuts)) == 2 else '0' + str(minuts)
         chapters_lines += minuts_string + ':' + seconds_string + ' ' + streamer_names[index] + '\n'
-        seconds += duration
+        seconds += int(duration)
         if seconds >= 60:
             seconds = seconds - 60
             minuts += 1
