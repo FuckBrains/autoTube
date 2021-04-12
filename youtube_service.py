@@ -45,7 +45,7 @@ def upload_video(game, first_clip_title, top_3_streamers, streamer_names, clip_d
     title = generate_title(game, first_clip_title, current_number, top_3_streamers)
     description = generate_description(game, title, tags, streamer_names, clip_durations)
     category = game['category']
-    fallback_title = game['game_name'] + game['title_tail'] + ' #' + str(current_number)
+    fallback_title = game['game_name'] + ' - ' + game['title_tail'] + ' #' + str(current_number)
     video_id = None
     tries = 0
     logging.info(title)
