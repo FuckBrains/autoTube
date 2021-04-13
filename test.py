@@ -31,7 +31,7 @@ from moviepy.editor import *
 # game = game_config.GAMES['ark_es']
 # upload_video(game, 'elmillor lo da todo', ['elmillor', 'coscu'])
 # upload_video_api(game, 'test title', file_path, 'test description', 20, ['test tag'])
-# thumbnail_url = get_video_thumbnail('8Kl0FmlagF0')
+thumbnail_url = get_video_thumbnail('8Kl0FmlagF0')
 # generate_thumbnail(game, 202, thumbnail_url)
-clip = VideoFileClip('test_video.mp4')
-print(int(clip.duration))
+# clip = VideoFileClip('test_video.mp4')
+# print(int(clip.duration))

@@ -192,7 +192,7 @@ def upload_thumbnail(game, video_id, file):
         logging.warning("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
 def get_video_thumbnail(video_id):
-    thumbnails_game_credentials = game_config.GAMES['ark_es'] #chatting_es credentials are the ones with read videos scope access
+    thumbnails_game_credentials = game_config.GAMES['marbella_vice'] #marbella_vice credentials are the ones with read videos scope access
     try:
         youtube = get_authenticated_service(thumbnails_game_credentials)
         request = youtube.videos().list(part="snippet", id=video_id
