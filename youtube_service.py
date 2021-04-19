@@ -12,16 +12,9 @@ emotes = ['🔥', '⭐', '💀', '😈', '🙀', '⚡', '🏆', '🎮', '💣', 
 def generate_title(game, first_clip_title, current_number, top_3_streamers):
     title = ''
     random_emote = random.choice(emotes)
-    filtered_streamers = set(top_3_streamers)
-    title = random_emote + ' ' + first_clip_title.title().replace('!', '').replace('.', '').upper() + '!' + ' ' + random_emote + ' ' + game['title_tail'] + ' #' + str(current_number)
-    for index, name in enumerate(filtered_streamers):
-        if index == 0:
-            provisional = title + ' Ft. ' + name
-        else:    
-            provisional = title + ', ' + name
-        if len(provisional) <= 100:
-            title = provisional
-    
+    first_streamer = top_3_streamers[0]
+    title = random_emote + ' ' + first_streamer + ' ' + first_clip_title.replace('!', '').replace('.', '').upper() + '!' + ' ' + random_emote + ' ' + game['title_tail'] + ' #' + str(current_number)
+    title = title.title()
     return title
 
 def generate_chapters_section(streamer_names, clip_durations):

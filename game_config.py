@@ -20,7 +20,7 @@ GAMES = {
         'key': 'lol_es',
         'game_name': 'League of Legends',
         'language': 'es',
-        'title_tail': 'MOMENTOS LOL ESPAÑA Y LATINOAMERICA',
+        'title_tail': 'Mejores Momentos Soloq Challenge',
         'description': 'Los mejores momentos de League of Legends España!, WTF Moments & Epic Moments! \n' \
                         'LoL Fails, Wins, Mejores momentos! \n' \
                         'Si te gusta, dale like y suscríbete!',
