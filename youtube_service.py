@@ -5,6 +5,7 @@ import time
 from youtube_api import upload_video as upload_video_to_youtube, upload_thumbnail as upload_thumbnail_to_youtube, get_video_thumbnail
 from thumbnail_generator_v2 import generate_thumbnail
 from repository import get_game_current_number, update_game_current_number
+from difflib import SequenceMatcher
 
 emotes = ['🔥', '⭐', '💀', '😈', '🙀', '⚡', '🏆', '🎮', '💣', '💎', '✅', '♠']
 
@@ -12,8 +13,13 @@ emotes = ['🔥', '⭐', '💀', '😈', '🙀', '⚡', '🏆', '🎮', '💣', 
 def generate_title(game, first_clip_title, current_number, top_3_streamers):
     title = ''
     random_emote = random.choice(emotes)
-    first_streamer = top_3_streamers[0]
-    title = random_emote + ' ' + first_streamer + ' ' + first_clip_title.replace('!', '').replace('.', '').upper() + '!' + ' ' + random_emote + ' ' + game['title_tail'] + ' #' + str(current_number)
+    first_streamer_part = ' ' + top_3_streamers[0] + ' '
+    for word in first_clip_title.split(' '):
+        ratio = SequenceMatcher(None, top_3_streamers[0], word).ratio()
+        if ratio >= 0.5:
+            first_streamer_part = ' '
+            break
+    title = random_emote + first_streamer_part + first_clip_title.replace('!', '').replace('.', '').upper() + '!' + ' ' + random_emote + ' ' + game['title_tail'] + ' #' + str(current_number)
     title = title.title()
     return title
 
